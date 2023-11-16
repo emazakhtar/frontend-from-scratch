@@ -1,57 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Product from "./features/products/components/Product.js";
+import Login from "./features/auth/components/Login.js";
+import Signup from "./features/auth/components/Signup.js";
+import Protected from "./features/common/Protected.js";
+import Navbar from "./features/navbar/Navbar.js";
+import ProductDetail from "./features/products/components/ProductDetail.js";
+import Cart from "./features/cart/components/Cart.js";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <Navbar>
+                <Product />
+              </Navbar>
+            </Protected>
+          }
+        />
+        <Route
+          path="/product-detail/:id"
+          element={
+            <Protected>
+              <Navbar>
+                <ProductDetail />
+              </Navbar>
+            </Protected>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Protected>
+              <Navbar>
+                <Cart />
+              </Navbar>
+            </Protected>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </Router>
   );
 }
 
